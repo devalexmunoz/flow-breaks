@@ -1,0 +1,7 @@
+# Ignore artifacts:
+build
+coverage
+
+composer.lock
+yarn.lock
+package-lock.json

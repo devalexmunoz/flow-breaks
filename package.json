@@ -1,21 +1,41 @@
 {
-    "$schema": "https://www.schemastore.org/package.json",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite",
-        "prepare": "husky"
-    },
-    "devDependencies": {
-        "@commitlint/cli": "^20.3.1",
-        "@commitlint/config-conventional": "^20.3.1",
-        "@tailwindcss/vite": "^4.0.0",
-        "axios": "^1.11.0",
-        "concurrently": "^9.0.1",
-        "husky": "^9.1.7",
-        "laravel-vite-plugin": "^2.0.0",
-        "tailwindcss": "^4.0.0",
-        "vite": "^7.0.7"
-    }
+  "$schema": "https://www.schemastore.org/package.json",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "prepare": "husky",
+    "lint": "npm run lint:php && npm run lint:js && npm run lint:css",
+    "lint:php": "./vendor/bin/duster fix",
+    "lint:js": "eslint resources/js/ --fix --max-warnings=0",
+    "lint:css": "stylelint \"resources/**/*.+(vue|scss)\" --fix",
+    "format": "./vendor/bin/pint && prettier --write . \"resources/**/*.+(js|json|vue|css|scss)\""
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@eslint/js": "^9.39.2",
+    "@tailwindcss/vite": "^4.0.0",
+    "axios": "^1.11.0",
+    "concurrently": "^9.0.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.7.0",
+    "husky": "^9.1.7",
+    "install": "0.13.0",
+    "laravel-vite-plugin": "^2.0.0",
+    "lint-staged": "^16.2.7",
+    "npm": "11.7.0",
+    "postcss-html": "^1.8.1",
+    "postcss-scss": "^4.0.9",
+    "prettier": "3.8.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-recess-order": "^7.4.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-config-standard-vue": "^1.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^7.0.7"
+  }
 }
