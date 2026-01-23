@@ -1,5 +1,7 @@
 {
-  "contracts": {},
+  "contracts": {
+    "Breaks": "cadence/contracts/Breaks.cdc"
+  },
   "dependencies": {
     "Burner": {
       "source": "mainnet://f233dcee88fe0abe.Burner",
@@ -96,6 +98,11 @@
         "type": "file",
         "location": "emulator-account.pkey"
       }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": ["Breaks"]
     }
   }
 }
