@@ -1,12 +1,5 @@
 {
-  "contracts": {
-    "Counter": {
-      "source": "cadence/contracts/Counter.cdc",
-      "aliases": {
-        "testing": "0000000000000007"
-      }
-    }
-  },
+  "contracts": {},
   "dependencies": {
     "Burner": {
       "source": "mainnet://f233dcee88fe0abe.Burner",
