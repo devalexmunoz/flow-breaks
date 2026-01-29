@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'flow' => [
+        'access_node' => env('FLOW_ACCESS_NODE_URL'),
+        'contracts' => [
+            'Breaks' => env('FLOW_ADMIN_ACCOUNT_ADDRESS'),
+        ],
+    ],
+
 ];
