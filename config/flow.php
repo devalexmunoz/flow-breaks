@@ -9,6 +9,7 @@ return [
      */
     'events' => [
         'Breaks.BreakCreated' => \App\Flow\Handlers\BreakCreatedHandler::class,
+        'Breaks.SpotPurchased' => \App\Flow\Handlers\SpotPurchasedHandler::class,
     ],
 
 ];
