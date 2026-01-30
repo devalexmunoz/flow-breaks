@@ -1,6 +1,14 @@
 <script setup>
   import { Head } from '@inertiajs/vue3'
   import WalletConnect from '@/Components/WalletConnect.vue'
+  import BreakCard from '@/Components/BreakCard.vue'
+
+  defineProps({
+    breaks: {
+      type: Array,
+      default: () => [],
+    },
+  })
 </script>
 
 <template>
@@ -8,30 +16,75 @@
 
   <div class="min-h-screen font-sans text-gray-800 bg-gray-50 flex flex-col">
     <nav
-      class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm"
+      class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50"
     >
-      <h1 class="text-2xl font-black tracking-tighter text-blue-600">
-        FLOW<span class="text-gray-900">BREAKS</span>
+      <h1
+        class="text-2xl font-black tracking-tighter text-blue-600 flex items-center gap-2"
+      >
+        <span>FLOW<span class="text-gray-900">BREAKS</span></span>
       </h1>
       <WalletConnect />
     </nav>
 
-    <main
-      class="flex-grow flex flex-col items-center justify-center p-6 text-center"
-    >
-      <h1 class="text-5xl font-extrabold text-gray-900 mb-6">
-        On-Chain <span class="text-blue-600">Breaks</span> for TS
-      </h1>
-      <p class="text-xl text-gray-600 max-w-2xl mb-8">
-        Buy a spot, get a randomized team, and receive every Moment pulled for
-        that team. All automated and verified on-chain.
-      </p>
+    <main class="flex-grow flex flex-col items-center">
+      <!-- Hero Section -->
+      <section class="w-full max-w-7xl mx-auto px-6 py-16 md:py-24 text-center">
+        <h1
+          class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight"
+        >
+          On-Chain
+          <span
+            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+            >Breaks</span
+          >
+          for TS
+        </h1>
+        <p
+          class="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
+          Buy a spot, get a randomized team, and receive every Moment pulled for
+          that team. All automated and verified on-chain.
+        </p>
+      </section>
 
-      <div
-        class="p-4 bg-blue-50 text-blue-700 rounded-lg border border-blue-100"
-      >
-        Connect your wallet to get started
-      </div>
+      <!-- Active Breaks Gallery -->
+      <section class="w-full max-w-7xl mx-auto px-6 pb-20">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+            Active Breaks
+          </h2>
+          <div class="text-sm text-gray-500 font-medium">
+            {{ breaks.length }} Breaks Live
+          </div>
+        </div>
+
+        <div
+          v-if="breaks.length > 0"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
+          <BreakCard
+            v-for="breakPool in breaks"
+            :key="breakPool.id"
+            :break-pool="breakPool"
+          />
+        </div>
+
+        <div
+          v-else
+          class="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm"
+        >
+          <div class="text-6xl mb-4">🏀</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">No Active Breaks</h3>
+          <p class="text-gray-500">Check back soon for new drops!</p>
+        </div>
+      </section>
     </main>
+
+    <footer
+      class="bg-white border-t border-gray-200 py-8 text-center text-gray-500 text-sm"
+    >
+      &copy; {{ new Date().getFullYear() }} FlowBreaks. All rights reserved.
+    </footer>
   </div>
 </template>
