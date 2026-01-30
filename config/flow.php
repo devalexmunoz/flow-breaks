@@ -10,6 +10,7 @@ return [
     'events' => [
         'Breaks.BreakCreated' => \App\Flow\Handlers\BreakCreatedHandler::class,
         'Breaks.SpotPurchased' => \App\Flow\Handlers\SpotPurchasedHandler::class,
+        'Breaks.StatusChanged' => \App\Flow\Handlers\StatusChangedHandler::class,
     ],
 
 ];
