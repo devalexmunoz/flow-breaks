@@ -160,6 +160,20 @@ access(all) contract Breaks {
             emit StatusChanged(breakId: self.id, status: self.status.rawValue)
         }
 
+        access(all) view fun getWinner(team: String): Address? {
+            // Iterate through all spot assignments
+            for spotId in self.assignments.keys {
+                let assignedTeams = self.assignments[spotId]!
+                
+                // Check if the team is in this spot's list
+                if assignedTeams.contains(team) {
+                    // Return the owner of this spot
+                    return self.spots[spotId]
+                }
+            }
+            return nil
+        }
+
         access(all) view fun getEscrowBalance(): UFix64 {
             return self.escrow.balance
         }
