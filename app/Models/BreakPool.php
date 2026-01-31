@@ -24,6 +24,13 @@ class BreakPool extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'integer',
+        'price' => 'decimal:2',
+        'on_chain_id' => 'integer',
+        'total_spots' => 'integer',
+    ];
+
     /**
      * Get the spots associated with this pool.
      */
