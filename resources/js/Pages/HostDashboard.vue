@@ -4,13 +4,17 @@
   import RandomizeBreakTx from '../../../flow/cadence/transactions/RandomizeBreak.cdc?raw'
   import WalletConnect from '@/Components/WalletConnect.vue'
   import { ref } from 'vue'
+  import DistributeModal from '@/Components/DistributeModal.vue'
 
-  defineProps({
+  const props = defineProps({
     breaks: {
       type: Array,
       default: () => [],
     },
   })
+
+  const showDistributeModal = ref(false)
+  const selectedBreak = ref(null)
 
   // NBA Teams List (Alphabetical)
   const NBA_TEAMS = [
@@ -127,10 +131,23 @@
       processingId.value = null
     }
   }
+
+  const openDistributeModal = (breakPool) => {
+    selectedBreak.value = breakPool
+    showDistributeModal.value = true
+  }
 </script>
 
 <template>
   <Head title="Host Dashboard" />
+
+  <!-- Distribute Modal -->
+  <DistributeModal
+    :show="showDistributeModal"
+    :break-pool="selectedBreak"
+    @close="showDistributeModal = false"
+    @completed="showDistributeModal = false"
+  />
 
   <div class="min-h-screen font-sans text-gray-800 bg-gray-50 flex flex-col">
     <!-- Navbar -->
@@ -255,7 +272,31 @@
                     v-else-if="breakPool.status === 2"
                     class="text-purple-600 text-xs font-bold"
                   >
-                    Teams Assigned ✅
+                    <button
+                      @click="openDistributeModal(breakPool)"
+                      class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
+                    >
+                      Distribute Moments 🎁
+                    </button>
+                  </span>
+                  <span
+                    v-else-if="breakPool.status === 3"
+                    class="text-gray-500 text-xs font-bold flex items-center gap-1"
+                  >
+                    <span>Completed</span>
+                    <svg
+                      class="w-4 h-4 text-green-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
                   </span>
                 </td>
               </tr>

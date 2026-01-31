@@ -1,6 +1,6 @@
-import TopShot from "TopShot"
-import Breaks from "Breaks"
-import NonFungibleToken from "NonFungibleToken"
+import TopShot from 0xTopShot
+import Breaks from 0xBreaks
+import NonFungibleToken from 0xNonFungibleToken
 
 transaction(breakId: UInt64, momentIDs: [UInt64]) {
     
