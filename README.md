@@ -1,59 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏀 Flow Breaks
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**The future of NBA TopShot pack breaking—automated, transparent, and 100% on-chain.**
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 💡 The Concept (For Collectors)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+NBA TopShot pack breaks are a staple of the community, but they have always relied on manual coordination and off-chain tools. **Flow Breaks** brings the entire experience onto the Flow blockchain.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### How to Play
 
-## Learning Laravel
+1.  **Join a Break**
+    Collectors purchase spots in an open break directly through the app using FLOW.
+2.  **On-Chain Randomization**
+    Once the break is full, the Host triggers the randomization. A Cadence script assigns NBA teams to participants with verifiable fairness—no external tools required.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+3.  **Instant Distribution**
+    The Host selects the moments pulled from the pack, and with one click, the smart contract handles the multi-recipient distribution instantly.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🏆 The Hackathon (For Judges)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+This project focuses on solving the "Trust & Efficiency" gap in the digital hobby. We moved the manual "middleman" work into smart contract logic.
 
-### Premium Partners
+### The Technical Achievement: Integrated On-Chain Lifecycle
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+The core innovation of Flow Breaks is the integration of the **Randomization** and **Distribution** phases into a single, verifiable flow.
 
-## Contributing
+**Key Technical Features:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Automated Multi-NFT Distribution:** We developed a Cadence transaction that allows a Host to distribute multiple TopShot Moments to different winners in a single atomic action.
+- **Verifiable On-Chain Randomization:** We replaced traditional "roulette" wheels with a Cadence-native randomization script. This ensures that the team-to-user mapping is transparent and tamper-proof.
+- **Hybrid State Sync:** A seamless integration between a Vue.js/Laravel stack and the Flow blockchain. The backend tracks break metadata, while the "Source of Truth" for ownership and fairness remains 100% on-chain
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛠️ Tech Stack
 
-## Security Vulnerabilities
+- **Frontend:** Vue 3 (Composition API), Tailwind CSS
+- **Backend:** Laravel (PHP 8.x), Inertia.js
+- **Blockchain:** Cadence, Flow Client Library (FCL)
+- **Smart Contracts:** TopShot (Standard), Custom Breaks Contract
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## ⚙️ Development Approach & Simulation
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To demonstrate the power of Flow Breaks within the NBA TopShot ecosystem, we simulated the live environment on the Flow Emulator:
+
+1.  **Contract Mocking:** We utilized the official TopShot contract structures to ensure our distribution scripts are mainnet-ready.
+2.  **Multi-Account Testing:** We leveraged the Flow Dev Wallet to simulate a Host (Service Account) and multiple Buyers (Alice, Bob) to prove the end-to-end transfer of assets.
+3.  **Metadata Injection:** We simulated TopShot "Moments" with realistic metadata (Player, Team, Tier) to demonstrate how a collector's "My Collection" page updates in real-time after a break is completed.
+
+---
+
+## 📄 Smart Contracts
+
+Our logic interacts with the core TopShot infrastructure while utilizing custom scripts for the breaking logic.
+
+### Key Logic Files
+
+- `CreateBreak.cdc`: Initializes a new break and sets up the on-chain vault for spot payments.
+- `RandomizeBreak.cdc`: Executes the team-to-address assignment logic.
+- `distribute_m=oments.cdc`: The "heavy lifter" that moves multiple NFTs to multiple recipients based on the randomization results.
+
+---
+
+**Ready to break?** 🚀
+Check out the **Host Dashboard** to create your first break or get a spot on an existing break.
