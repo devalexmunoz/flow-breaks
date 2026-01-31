@@ -154,14 +154,11 @@
     <nav
       class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50"
     >
-      <Link
-        href="/"
-        class="text-2xl font-black tracking-tighter text-blue-600 flex items-center gap-2"
-      >
-        <span>FLOW<span class="text-gray-900">BREAKS</span></span>
+      <Link href="/" class="flex items-center gap-2">
+        <img src="../../img/logo.png" alt="FlowBreaks" class="h-12 w-auto" />
         <span
-          class="ml-2 px-2 py-0.5 text-xs font-mono bg-blue-100 text-blue-700 rounded border border-blue-200 uppercase"
-          >Host</span
+          class="ml-2 px-2.5 py-0.5 text-[10px] font-bold tracking-wider bg-gray-900 text-white rounded-full uppercase shadow-sm border border-gray-700"
+          >Host Zone</span
         >
       </Link>
       <div class="flex items-center gap-4">

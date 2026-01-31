@@ -60,11 +60,18 @@
       ></div>
 
       <!-- Placeholder Image simulating sports card -->
-      <img
-        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(breakPool.title)}&background=0D8ABC&color=fff&size=512&font-size=0.33`"
-        alt="Break Image"
-        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-      />
+      <!-- Dynamic Card Background -->
+      <div
+        class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-6 relative"
+      >
+        <h2
+          class="text-white text-2xl font-black text-center leading-tight z-10 font-display tracking-tight drop-shadow-md"
+        >
+          {{ breakPool.title }}
+        </h2>
+
+        <!-- Decorative Background Element Removed -->
+      </div>
 
       <!-- Price Tag -->
       <div class="absolute top-3 right-3 z-20">
@@ -85,7 +92,7 @@
         </span>
         <span
           v-else
-          class="px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-green-500 text-white shadow-lg shadow-green-500/30"
+          class="px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-brand-green text-gray-900 shadow-lg shadow-brand-green/30"
         >
           Live
         </span>

@@ -59,14 +59,8 @@
     <nav
       class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50"
     >
-      <Link
-        href="/"
-        class="text-2xl font-black tracking-tighter text-blue-600 flex items-center gap-2"
-      >
-        <span
-          >FLOW<span class="text-gray-900">BREAKS</span
-          ><span class="text-brand-green text-3xl leading-none">.</span></span
-        >
+      <Link href="/" class="flex items-center gap-2">
+        <img src="../../img/logo.png" alt="FlowBreaks" class="h-12 w-auto" />
       </Link>
       <div class="flex items-center gap-4">
         <Link
