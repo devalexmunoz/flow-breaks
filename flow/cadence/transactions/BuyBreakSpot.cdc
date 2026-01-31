@@ -1,6 +1,6 @@
-import FlowToken from "FlowToken"
-import FungibleToken from "FungibleToken"
-import Breaks from "Breaks"
+import FlowToken from 0xFlowToken
+import FungibleToken from 0xFungibleToken
+import Breaks from 0xBreaks
 
 transaction(breakId: UInt64, hostAddress: Address, amount: UFix64) {
 

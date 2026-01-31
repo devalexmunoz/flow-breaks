@@ -1,5 +1,6 @@
 <script setup>
-  import { computed } from 'vue'
+  import { computed, ref, toRef } from 'vue'
+  import { usePurchase } from '@/Composables/usePurchase'
 
   const props = defineProps({
     breakPool: {
@@ -8,23 +9,42 @@
     },
   })
 
+  // Local reactive state for optimistic updates
+  const spotsTaken = ref(props.breakPool.spots_count)
+  const price = toRef(props.breakPool, 'price')
+
+  const { buySpot, isLoading, error, transactionId } = usePurchase()
+
   const percentage = computed(() => {
     if (!props.breakPool.total_spots) return 0
     return Math.min(
       100,
-      Math.round(
-        (props.breakPool.spots_count / props.breakPool.total_spots) * 100
-      )
+      Math.round((spotsTaken.value / props.breakPool.total_spots) * 100)
     )
   })
 
   const isFilled = computed(() => {
-    return props.breakPool.spots_count >= props.breakPool.total_spots
+    return spotsTaken.value >= props.breakPool.total_spots
   })
 
   const cardClasses = computed(() => {
     return isFilled.value ? 'opacity-75 grayscale' : ''
   })
+
+  const handleBuy = async () => {
+    if (isFilled.value) return
+
+    await buySpot(
+      props.breakPool.on_chain_id,
+      props.breakPool.host_address,
+      price.value
+    )
+
+    if (transactionId.value && !error.value) {
+      // Optimistic update: Increment spots taken
+      spotsTaken.value++
+    }
+  }
 </script>
 
 <template>
@@ -51,7 +71,7 @@
         <div
           class="bg-white/90 backdrop-blur-sm shadow-sm px-3 py-1 rounded-full font-bold text-gray-900 border border-white/50"
         >
-          ${{ Number(breakPool.price).toFixed(2) }}
+          ${{ Number(price).toFixed(2) }}
         </div>
       </div>
 
@@ -97,7 +117,7 @@
         <div class="flex justify-between items-end mb-1">
           <span class="text-xs font-semibold text-gray-700">Spots Taken</span>
           <span class="text-xs font-bold text-blue-600">
-            {{ breakPool.spots_count }} / {{ breakPool.total_spots }}
+            {{ spotsTaken }} / {{ breakPool.total_spots }}
           </span>
         </div>
         <div class="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
@@ -115,16 +135,47 @@
 
       <!-- Action Button -->
       <div class="mt-5">
+        <div
+          v-if="error"
+          class="mb-2 text-xs text-center text-red-600 font-medium bg-red-50 p-2 rounded border border-red-100"
+        >
+          {{ error }}
+        </div>
+
+        <div
+          v-if="transactionId"
+          class="mb-2 p-3 bg-green-50 border border-green-100 rounded-xl flex flex-col items-center animate-pulse"
+        >
+          <span class="text-2xl mb-1">🎉</span>
+          <span class="text-sm font-bold text-green-700">Spot Secured!</span>
+          <a
+            :href="`https://testnet.flowscan.org/transaction/${transactionId}`"
+            target="_blank"
+            class="text-[10px] text-green-600 hover:underline mt-1"
+          >
+            View on FlowScan ↗
+          </a>
+        </div>
+
         <button
-          class="w-full py-2.5 rounded-xl font-bold text-sm transition-all duration-200"
-          :class="
+          v-else
+          @click="handleBuy"
+          class="w-full py-2.5 rounded-xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2"
+          :class="[
             isFilled
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-gray-900 text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-600/30 active:scale-95'
-          "
-          :disabled="isFilled"
+              : 'bg-gray-900 text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-600/30 active:scale-95',
+            isLoading ? 'opacity-80 cursor-wait' : '',
+          ]"
+          :disabled="isFilled || isLoading"
         >
-          {{ isFilled ? 'Sold Out' : 'Join Break' }}
+          <span
+            v-if="isLoading"
+            class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
+          ></span>
+          {{
+            isFilled ? 'Sold Out' : isLoading ? 'Processing...' : 'Join Break'
+          }}
         </button>
       </div>
     </div>
