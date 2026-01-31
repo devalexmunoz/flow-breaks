@@ -103,7 +103,15 @@
       >
         <span>FLOW<span class="text-gray-900">BREAKS</span></span>
       </Link>
-      <WalletConnect />
+      <div class="flex items-center gap-4">
+        <Link
+          href="/collection"
+          class="text-sm font-medium text-gray-500 hover:text-gray-900 hidden sm:block"
+        >
+          My Collection
+        </Link>
+        <WalletConnect />
+      </div>
     </nav>
 
     <main class="flex-grow flex flex-col items-center justify-center p-6">

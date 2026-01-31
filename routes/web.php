@@ -24,3 +24,7 @@ Route::patch('breaks/{breakPool}', [App\Http\Controllers\BreakPoolController::cl
 Route::get('create', function () {
     return Inertia::render('Create');
 })->name('breaks.create');
+
+Route::get('collection', function () {
+    return Inertia::render('MyMoments');
+})->name('collection');

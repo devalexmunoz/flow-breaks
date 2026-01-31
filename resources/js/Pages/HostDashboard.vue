@@ -6,7 +6,7 @@
   import { ref } from 'vue'
   import DistributeModal from '@/Components/DistributeModal.vue'
 
-  const props = defineProps({
+  defineProps({
     breaks: {
       type: Array,
       default: () => [],
@@ -166,6 +166,12 @@
       </Link>
       <div class="flex items-center gap-4">
         <Link
+          href="/collection"
+          class="text-sm font-medium text-gray-500 hover:text-gray-900 hidden sm:block"
+        >
+          My Collection
+        </Link>
+        <Link
           href="/create"
           class="text-sm font-bold text-gray-600 hover:text-blue-600"
         >
@@ -274,7 +280,7 @@
                   >
                     <button
                       @click="openDistributeModal(breakPool)"
-                      class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
+                      class="inline-flex items-center px-3 py-1.5 bg-brand-green hover:bg-emerald-400 text-gray-900 text-xs font-bold rounded-lg transition-colors shadow-sm"
                     >
                       Distribute Moments 🎁
                     </button>

@@ -21,7 +21,10 @@
       <h1
         class="text-2xl font-black tracking-tighter text-blue-600 flex items-center gap-2"
       >
-        <span>FLOW<span class="text-gray-900">BREAKS</span></span>
+        <span
+          >FLOW<span class="text-gray-900">BREAKS</span
+          ><span class="text-brand-green text-3xl leading-none">.</span></span
+        >
       </h1>
       <div class="flex items-center gap-4">
         <Link
@@ -31,8 +34,14 @@
           Dashboard
         </Link>
         <Link
+          href="/collection"
+          class="text-sm font-medium text-gray-500 hover:text-gray-900 hidden sm:block"
+        >
+          My Collection
+        </Link>
+        <Link
           href="/create"
-          class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+          class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-700 hover:text-brand-green hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-brand-green/20"
         >
           <span>+ Create Break</span>
         </Link>
@@ -48,7 +57,7 @@
         >
           On-Chain
           <span
-            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-brand-green"
             >Breaks</span
           >
           for TS
