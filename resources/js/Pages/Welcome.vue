@@ -1,5 +1,5 @@
 <script setup>
-  import { Head } from '@inertiajs/vue3'
+  import { Head, Link } from '@inertiajs/vue3'
   import WalletConnect from '@/Components/WalletConnect.vue'
   import BreakCard from '@/Components/BreakCard.vue'
 
@@ -23,7 +23,15 @@
       >
         <span>FLOW<span class="text-gray-900">BREAKS</span></span>
       </h1>
-      <WalletConnect />
+      <div class="flex items-center gap-4">
+        <Link
+          href="/create"
+          class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+        >
+          <span>+ Create Break</span>
+        </Link>
+        <WalletConnect />
+      </div>
     </nav>
 
     <main class="flex-grow flex flex-col items-center">

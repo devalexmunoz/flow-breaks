@@ -14,4 +14,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'breaks' => $breaks,
     ]);
-});
+})->name('home');
+
+Route::post('breaks', [App\Http\Controllers\BreakPoolController::class, 'store'])->name('breaks.store');
+
+Route::get('create', function () {
+    return Inertia::render('Create');
+})->name('breaks.create');

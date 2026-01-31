@@ -17,6 +17,7 @@ class BreakPool extends Model
     protected $fillable = [
         'on_chain_id',
         'host_address',
+        'name',
         'title',
         'price',
         'total_spots',
