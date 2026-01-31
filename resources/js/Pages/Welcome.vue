@@ -25,6 +25,12 @@
       </h1>
       <div class="flex items-center gap-4">
         <Link
+          href="/dashboard"
+          class="text-sm font-medium text-gray-500 hover:text-gray-900 hidden sm:block"
+        >
+          Dashboard
+        </Link>
+        <Link
           href="/create"
           class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
         >

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BreakPool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class BreakPoolController extends Controller
 {
@@ -29,5 +30,30 @@ class BreakPoolController extends Controller
         ]);
 
         return Redirect::route('home');
+    }
+
+    public function update(Request $request, BreakPool $breakPool)
+    {
+        $validated = $request->validate([
+            'status' => 'required|integer',
+        ]);
+
+        $breakPool->update([
+            'status' => $validated['status'],
+        ]);
+
+        return Redirect::back();
+    }
+
+    public function dashboard()
+    {
+        $breaks = BreakPool::query()
+            ->withCount('spots')
+            ->latest()
+            ->get();
+
+        return Inertia::render('HostDashboard', [
+            'breaks' => $breaks,
+        ]);
     }
 }

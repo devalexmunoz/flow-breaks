@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Route::post('breaks', [App\Http\Controllers\BreakPoolController::class, 'store'])->name('breaks.store');
 
+Route::get('dashboard', [App\Http\Controllers\BreakPoolController::class, 'dashboard'])->name('dashboard');
+Route::patch('breaks/{breakPool}', [App\Http\Controllers\BreakPoolController::class, 'update'])->name('breaks.update');
+
 Route::get('create', function () {
     return Inertia::render('Create');
 })->name('breaks.create');
