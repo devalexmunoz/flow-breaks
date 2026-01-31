@@ -2,6 +2,7 @@ import NonFungibleToken from "NonFungibleToken"
 import MetadataViews from "MetadataViews"
 import FungibleToken from "FungibleToken"
 import FlowToken from "FlowToken"
+import RandomBeaconHistory from "RandomBeaconHistory"
 
 access(all) contract Breaks {
 
@@ -44,6 +45,10 @@ access(all) contract Breaks {
         
         access(all) var spots: {UInt64: Address} 
         access(all) var status: BreakStatus
+        
+        // New fields for draft/randomization
+        access(all) var teams: [String]
+        access(all) var assignments: {UInt64: [String]}
 
         access(self) let escrow: @FlowToken.Vault
 
@@ -54,6 +59,8 @@ access(all) contract Breaks {
             self.totalSpots = totalSpots
             self.spots = {}
             self.status = BreakStatus.OPEN
+            self.teams = []
+            self.assignments = {}
             self.escrow <- FlowToken.createEmptyVault(vaultType: Type<@FlowToken.Vault>())
 
             Breaks.nextBreakId = Breaks.nextBreakId + 1
@@ -77,6 +84,80 @@ access(all) contract Breaks {
                 self.status = BreakStatus.FILLED
                 emit StatusChanged(breakId: self.id, status: self.status.rawValue)
             }
+        }
+
+        access(all) fun randomize(teams: [String]) {
+            pre {
+                self.status == BreakStatus.FILLED: "Break is not filled."
+                teams.length >= Int(self.totalSpots): "Number of teams must be at least the number of spots."
+            }
+
+            self.teams = teams
+            
+            // Secure Randomness using RandomBeaconHistory
+            let blockHeight = getCurrentBlock().height
+            // Get the source of randomness from the previous block to ensure it's available
+            let sourceOfRandomness = RandomBeaconHistory.sourceOfRandomness(atBlockHeight: blockHeight - 1)
+            let randomCoordinates = sourceOfRandomness.value
+
+            // Use the random coordinates to seed our shuffle
+            // We'll use a simple approach of hashing the seed with the index to get a new random value for each swap
+            
+            var i = 0
+            while i < self.teams.length - 1 {
+                // Combine random coordinates with the current index to vary the randomness
+                // In a real production app, consider a more robust PRNG helper contract
+                let dataToHash = randomCoordinates.concat(i.toBigEndianBytes())
+                let hash = String.encodeHex(HashAlgorithm.SHA3_256.hash(dataToHash))
+                
+                // Convert a portion of the hash to a UInt64
+                // Taking first 8 bytes (16 hex chars) roughly
+                // For simplicity in this demo without a helper, we can treat the hash bytes as the source
+                let hashBytes = HashAlgorithm.SHA3_256.hash(dataToHash)
+                
+                // Manual conversion of first 8 bytes to UInt64
+                var randomVal: UInt64 = 0
+                var b = 0
+                while b < 8 {
+                    randomVal = randomVal | (UInt64(hashBytes[b]) << UInt64(b * 8))
+                    b = b + 1
+                }
+
+                // Random index j where i <= j < n
+                let range = UInt64(self.teams.length - i)
+                let j = Int(randomVal % range) + i
+                
+                // Swap
+                let temp = self.teams[i]
+                self.teams[i] = self.teams[j]
+                self.teams[j] = temp
+                
+                i = i + 1
+            }
+
+            // Assign teams to spots in a Round Robin fashion
+            
+            // 1. Initialize empty arrays for all spot IDs
+            var spotIndex: UInt64 = 0
+            while spotIndex < self.totalSpots {
+                self.assignments[spotIndex] = []
+                spotIndex = spotIndex + 1
+            }
+
+            // 2. Distribute teams
+            var teamIndex = 0
+            while teamIndex < self.teams.length {
+                let targetSpot = UInt64(teamIndex) % self.totalSpots
+                
+                // Append team to the target spot's list
+                // Since we initialized all keys above, force unwrap is safe
+                self.assignments[targetSpot]?.append(self.teams[teamIndex])
+                
+                teamIndex = teamIndex + 1
+            }
+
+            self.status = BreakStatus.RANDOMIZED
+            emit StatusChanged(breakId: self.id, status: self.status.rawValue)
         }
 
         access(all) view fun getEscrowBalance(): UFix64 {
